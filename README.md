@@ -11,4 +11,4 @@
 #### - Visualize all information on the Serial Monitor
 
 ### 🌍 Project Homapage
-👉 **[IoT-C Project Homepage]()**
+👉 **[IoT-C Project Homepage](https://jiyunelizabethyang.github.io/Weather_Tracker_IoT/)**
