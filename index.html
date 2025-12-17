@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
 
-  <!-- ✅ Fill these for nicer sharing -->
-  <meta name="description" content="Weather Tracker IoT - Jiyun Yang's Implementation (OLED Weather Display + LED Indicators)">
+  <!-- ✅ Social / SEO (fill og:url + og:image if you want) -->
+  <meta name="description" content="Weather Tracker IoT - Jiyun Yang's Implementation (OLED Weather Display + LED Indicators + Presentation Deliverables)">
   <meta property="og:title" content="Weather Tracker IoT | Jiyun Yang"/>
-  <meta property="og:description" content="OLED weather display + LED indicator logic using ESP32 (Wokwi) and KMA API."/>
+  <meta property="og:description" content="OLED weather output + LED indicator logic on ESP32 (Wokwi) using KMA API. Includes demo, code, and deliverables."/>
   <meta property="og:url" content="URL OF THE WEBSITE"/>
   <meta property="og:image" content="static/images/your_banner_image.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
 
   <meta name="twitter:title" content="Weather Tracker IoT | Jiyun Yang">
-  <meta name="twitter:description" content="OLED weather display + LED indicator logic using ESP32 (Wokwi) and KMA API.">
+  <meta name="twitter:description" content="OLED weather output + LED indicator logic on ESP32 (Wokwi) using KMA API. Includes demo, code, and deliverables.">
   <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
   <meta name="twitter:card" content="summary_large_image">
 
-  <meta name="keywords" content="IoT, ESP32, Wokwi, OLED, KMA API, Weather, LED Indicators">
+  <meta name="keywords" content="IoT, ESP32, Wokwi, OLED, SSD1306, KMA API, Weather, LED Indicators, Project Page">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/x-icon" href="static/images/sejong.png">
@@ -184,8 +184,10 @@
       font-weight: 900;
     }
 
-    /* Small table-ish list */
+    /* Small list spacing */
     .mini-list li{ margin: .35rem 0; line-height: 1.45; }
+
+    /* FAQ */
     .faq details{
       background: rgba(0,0,0,0.03);
       border: 1px solid rgba(0,0,0,0.06);
@@ -194,6 +196,28 @@
     }
     .faq details + details{ margin-top: .6rem; }
     .faq summary{ cursor: pointer; font-weight: 900; }
+
+    /* Deliverables cards */
+    .deliver-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media(min-width: 900px){
+      .deliver-grid{ grid-template-columns: 1fr 1fr; }
+    }
+    .deliver-item{
+      border-radius: var(--radius);
+      box-shadow: var(--cardshadow);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 1.0rem 1.05rem;
+      background: linear-gradient(45deg, rgba(121,40,202,0.10), rgba(5,117,230,0.08));
+    }
+    .deliver-item .title{ margin-bottom: .35rem; }
+    .deliver-item a{ font-weight: 800; }
+
+    /* Make anchors look clean */
+    a { word-break: break-word; }
   </style>
 </head>
 
@@ -228,6 +252,36 @@
             <div class="column has-text-centered">
               <div class="publication-links">
 
+                <!-- ✅ Personal repo -->
+                <span class="link-block">
+                  <a href="https://github.com/JiyunElizabethYang/Weather_Tracker_IoT"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github" style="color:black;"></i></span>
+                    <span>Code (GitHub)</span>
+                  </a>
+                </span>
+
+                <!-- ✅ Wokwi links (provided) -->
+                <span class="link-block">
+                  <a href="https://wokwi.com/projects/447578913862710273"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-tv" style="color:#fff;"></i></span>
+                    <span>Wokwi (OLED)</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://wokwi.com/projects/448217235414653953"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-lightbulb" style="color:#fff;"></i></span>
+                    <span>Wokwi (LEDs)</span>
+                  </a>
+                </span>
+
+                <!-- ✅ Slides (you can replace with your final slide link if needed) -->
                 <span class="link-block">
                   <a href="https://www.miricanvas.com/login?redirect=%2Fv2%2Fdesign2%2Fb5ef6afd-445e-4750-8d92-b87fea76e252"
                      target="_blank" rel="noopener noreferrer"
@@ -236,27 +290,6 @@
                     <span>Slides</span>
                   </a>
                 </span>
-
-                <span class="link-block">
-                  <a href="https://github.com/JiyunElizabethYang/Weather_Tracker_IoT"
-                     target="_blank" rel="noopener noreferrer"
-                     class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fab fa-github" style="color:black;"></i></span>
-                    <span>Code</span>
-                  </a>
-                </span>
-
-                <!-- (선택) Wokwi 링크 자리 -->
-                <!--
-                <span class="link-block">
-                  <a href="WOKWI_PROJECT_LINK_HERE"
-                     target="_blank" rel="noopener noreferrer"
-                     class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fas fa-play" style="color:#fff;"></i></span>
-                    <span>Wokwi</span>
-                  </a>
-                </span>
-                -->
 
               </div>
             </div>
@@ -267,40 +300,50 @@
     </div>
   </section>
 
-  <!-- WELCOME + DEMO -->
+  <!-- WELCOME + WHAT I DID (PROF REQUIREMENTS) -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Welcome to "Weather Tracker IoT" — Jiyun's Page</h2>
+            <h2 class="title is-3 section-title">Welcome — Jiyun Yang's Individual Contribution</h2>
 
             <div class="soft-card">
               <p style="margin-bottom:.6rem;">
-                This page documents <b>my implementation</b> for the group project. I focused on:
-                <span class="grad-emph">OLED weather output</span> and <span class="grad-emph">LED indicator logic</span>
-                using <b>ESP32 (Wokwi)</b> and the <b>KMA API Hub</b>.
+                This page is a <b>personal project report</b> for the team project <b>Weather Tracker IoT</b>.
+                It clearly presents <b>my role</b>, <b>my implementation details</b>, and a <b>demo</b>,
+                as required for the final evaluation.
               </p>
+
+              <!-- ✅ Required role list explicitly included -->
+              <p style="margin-top:.7rem; margin-bottom:.4rem;"><b>My responsibilities:</b></p>
+              <ul class="mini-list">
+                <li><b>OLED Weather Output</b>: Display real-time weather values on the SSD1306 OLED.</li>
+                <li><b>LED Sensor Code</b>: Implement rule-based LED indicators (Sunny/Windy/Rainy).</li>
+                <li><b>Presentation & Materials</b>: Create and prepare
+                  <b>Midterm PPT</b>, <b>Shared Team Webpage</b>, <b>Shared Team GitHub</b>, and <b>Final PPT</b>.
+                </li>
+              </ul>
+
               <div class="chiprow">
-                <span class="chip ok">OLED Display</span>
+                <span class="chip ok">OLED Output</span>
                 <span class="chip ok">LED Logic</span>
-                <span class="chip alt">ESP32 (Wokwi)</span>
-                <span class="chip alt">KMA API</span>
-                <span class="chip">JSON Parsing</span>
-                <span class="chip">NTP Time Sync</span>
+                <span class="chip alt">Presentation Materials</span>
+                <span class="chip alt">Team Webpage & GitHub</span>
+                <span class="chip">Wokwi Demo</span>
               </div>
             </div>
 
             <br>
 
             <div class="media-frame">
-              <!-- ✅ Put your demo video here -->
+              <!-- ✅ Your demo video -->
               <video id="demo" autoplay controls muted loop>
                 <source src="static/videos/project.mp4" type="video/mp4">
               </video>
             </div>
             <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
-              Demo video: OLED shows (Temp/Humid/Rain/Wind) and LEDs indicate Sunny/Windy/Rainy.
+              Demo video: OLED shows (Temp/Humid/Rain/Wind) and LEDs indicate Sunny/Windy/Rainy based on weather conditions.
             </p>
 
           </div>
@@ -315,38 +358,51 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Overview</h2>
+            <h2 class="title is-3 section-title">Project Overview</h2>
 
             <div class="grid-2">
               <div class="soft-card">
                 <p style="margin-bottom:.5rem;">
-                  <b><span class="grad-emph">What this system does</span></b>
+                  <b><span class="grad-emph">What the project does</span></b>
                 </p>
                 <ul class="mini-list">
-                  <li>Fetches real-time weather observations from <b>KMA API Hub</b> (UltraSrtNcst).</li>
-                  <li>Parses JSON categories: <b>T1H</b>(Temp), <b>REH</b>(Humidity), <b>RN1</b>(Rain), <b>VEC</b>(Wind direction), <b>WSD</b>(Wind speed).</li>
-                  <li>Displays values on the <b>OLED</b> (SSD1306).</li>
-                  <li>Turns on <b>LEDs</b> based on weather conditions (Sunny/Windy/Rainy).</li>
+                  <li>Fetches real-time weather observations from the <b>Korea Meteorological Administration (KMA) API Hub</b>.</li>
+                  <li>Parses JSON categories:
+                    <b>T1H</b> (Temperature), <b>REH</b> (Humidity), <b>RN1</b> (Rainfall),
+                    <b>VEC</b> (Wind direction), <b>WSD</b> (Wind speed).
+                  </li>
+                  <li>Visualizes data using an <b>OLED</b> display and <b>LED indicators</b> in a simulated ESP32 environment.</li>
                 </ul>
+                <div class="chiprow">
+                  <span class="chip alt">KMA API</span>
+                  <span class="chip">JSON</span>
+                  <span class="chip ok">OLED</span>
+                  <span class="chip ok">LEDs</span>
+                </div>
               </div>
 
               <div class="soft-card">
                 <p style="margin-bottom:.5rem;">
-                  <b><span class="grad-emph">My role in the group</span></b>
+                  <b><span class="grad-emph">My part (high scoring summary)</span></b>
                 </p>
                 <ul class="mini-list">
-                  <li><b>OLED Text UI</b>: formatted 4-line weather output.</li>
-                  <li><b>LED Control Logic</b>: rule-based mapping for Rainy / Windy / Sunny.</li>
-                  <li><b>Debugging</b>: verified JSON parsing and handled base_time logic (NTP sync).</li>
-                  <li><b>Project Page</b>: documented implementation details & demo for evaluation.</li>
+                  <li>Designed a clear <b>4-line OLED UI</b> (Temp / Humid / Rain / Wind).</li>
+                  <li>Implemented <b>deterministic LED rules</b> with strict priority to avoid conflicting states.</li>
+                  <li>Provided <b>defendable evidence</b> using Serial logs (URL + parsed values).</li>
+                  <li>Prepared and organized <b>project deliverables</b> (PPTs + shared web/GitHub materials).</li>
                 </ul>
+                <div class="chiprow">
+                  <span class="chip ok">Defendable</span>
+                  <span class="chip">Priority rules</span>
+                  <span class="chip alt">Documentation</span>
+                </div>
               </div>
             </div>
 
             <br>
 
             <div class="media-frame">
-              <img src="static/images/overview photo.png" alt="Overview image">
+              <img src="static/images/overview photo.png" alt="Project overview image">
             </div>
 
           </div>
@@ -355,48 +411,48 @@
     </div>
   </section>
 
-  <!-- IMPLEMENTATION DETAILS (DEFENDABLE) -->
+  <!-- METHOD (FOCUS: JIYUN PART) -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Implementation Details (My Part)</h2>
+            <h2 class="title is-3 section-title">Method (My Implementation)</h2>
 
             <div class="grid-2">
 
               <div class="soft-card">
                 <h3 class="title is-5" style="margin-bottom:.5rem;">A) OLED Weather Output</h3>
                 <ul class="mini-list">
-                  <li><b>Libraries</b>: Adafruit_SSD1306, Adafruit_GFX, Wire.</li>
-                  <li><b>Display layout</b>: 4 lines (Temp / Humid / Rain / Wind).</li>
-                  <li><b>Wind format</b>: <code>VEC(deg)</code> + <code>WSD(m/s)</code> for clarity.</li>
-                  <li><b>Update policy</b>: periodic fetch (e.g., every 60 seconds) or on demand.</li>
+                  <li><b>Goal</b>: Display the latest weather values on an SSD1306 OLED (128×64).</li>
+                  <li><b>UI layout</b>: 4 lines to fit the screen cleanly.</li>
+                  <li><b>Wind format</b>: <code>VECdeg / WSDm/s</code> (human-readable and compact).</li>
+                  <li><b>Reliability</b>: Use NTP time sync and fetch from the latest valid base time.</li>
                 </ul>
                 <div class="chiprow">
                   <span class="chip ok">SSD1306</span>
-                  <span class="chip alt">Wire SDA=21 SCL=22</span>
-                  <span class="chip">printf layout</span>
+                  <span class="chip alt">NTP Sync</span>
+                  <span class="chip">Readable UI</span>
                 </div>
               </div>
 
               <div class="soft-card">
-                <h3 class="title is-5" style="margin-bottom:.5rem;">B) LED Indicator Logic</h3>
+                <h3 class="title is-5" style="margin-bottom:.5rem;">B) LED Indicator Rules</h3>
+                <p style="margin-bottom:.5rem;">
+                  I used a <b>rule-based decision</b> with <b>priority</b> to ensure only one LED is ON at a time.
+                </p>
+
                 <ul class="mini-list">
-                  <li><b>LED mapping</b>:
-                    <ul>
-                      <li><b>Blue</b> = Rainy</li>
-                      <li><b>Yellow</b> = Windy</li>
-                      <li><b>Red</b> = Sunny</li>
-                    </ul>
-                  </li>
-                  <li><b>Priority rule</b>: Rainy first → then Windy → then Sunny (prevents conflicts).</li>
-                  <li><b>Why priority?</b> Rain is the most critical condition for immediate action (umbrella alert).</li>
+                  <li><b>Rainy (Blue)</b>: <code>RN1 &gt; 0</code></li>
+                  <li><b>Windy (Yellow)</b>: <code>VEC &gt;= 3.5</code></li>
+                  <li><b>Sunny (Red)</b>: <code>RN1 == 0 AND REH &lt;= 50</code></li>
+                  <li><b>Priority</b>: Rainy → Windy → Sunny (prevents conflicts).</li>
                 </ul>
+
                 <div class="chiprow">
-                  <span class="chip ok">Rule-based</span>
-                  <span class="chip alt">Priority</span>
-                  <span class="chip">Readable conditions</span>
+                  <span class="chip ok">Priority</span>
+                  <span class="chip">Single active LED</span>
+                  <span class="chip alt">Clear conditions</span>
                 </div>
               </div>
 
@@ -405,12 +461,11 @@
             <br>
 
             <div class="soft-card">
-              <h3 class="title is-5" style="margin-bottom:.5rem;">C) How I ensured the code is correct (defense points)</h3>
+              <h3 class="title is-5" style="margin-bottom:.5rem;">C) What I can defend in Q&A</h3>
               <ul class="mini-list">
-                <li><b>Time sync</b>: used NTP (KST offset) and adjusted base_time when minutes &lt; 15.</li>
-                <li><b>Data validation</b>: extracted only known categories (T1H/REH/RN1/VEC/WSD).</li>
-                <li><b>Serial logs</b>: printed URL + parsed values for verification and debugging.</li>
-                <li><b>OLED check</b>: verified formatting fits 128×64 (text size 1).</li>
+                <li><b>Correctness</b>: Serial log shows request URL and parsed values used for OLED/LED decisions.</li>
+                <li><b>Stability</b>: NTP sync + base time alignment avoids requesting missing datasets.</li>
+                <li><b>Clarity</b>: OLED output is compact and consistent with units.</li>
               </ul>
             </div>
 
@@ -420,21 +475,88 @@
     </div>
   </section>
 
-  <!-- CODE SECTION -->
+  <!-- DELIVERABLES (PPT / TEAM WEB / TEAM GITHUB) -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">My Code (Wokwi)</h2>
+            <h2 class="title is-3 section-title">Deliverables I Prepared</h2>
 
-            <!-- OLED code -->
+            <div class="soft-card" style="margin-bottom:1rem;">
+              <p style="margin-bottom:.5rem;">
+                In addition to coding, I created and prepared key deliverables required for evaluation and teamwork.
+              </p>
+              <div class="chiprow">
+                <span class="chip ok">Midterm PPT</span>
+                <span class="chip ok">Final PPT</span>
+                <span class="chip alt">Shared Team Webpage</span>
+                <span class="chip alt">Shared Team GitHub</span>
+              </div>
+            </div>
+
+            <div class="deliver-grid">
+
+              <div class="deliver-item">
+                <h3 class="title is-5">Midterm Presentation (PPT)</h3>
+                <p class="is-size-6">Created and organized slides to explain project scope, method, and progress.</p>
+                <p class="is-size-7" style="opacity:.85;">(Replace with your real midterm PPT link if different.)</p>
+              </div>
+
+              <div class="deliver-item">
+                <h3 class="title is-5">Final Presentation (PPT)</h3>
+                <p class="is-size-6">Prepared final slides including results, demo, and key contributions.</p>
+                <p class="is-size-7" style="opacity:.85;">(Replace with your real final PPT link if different.)</p>
+              </div>
+
+              <div class="deliver-item">
+                <h3 class="title is-5">Shared Team Webpage</h3>
+                <p class="is-size-6">Helped build the shared group project page and ensured consistency in design and content.</p>
+                <p class="is-size-7" style="opacity:.85;">(Add the team webpage URL here if you want it shown.)</p>
+              </div>
+
+              <div class="deliver-item">
+                <h3 class="title is-5">Shared Team GitHub</h3>
+                <p class="is-size-6">Organized materials and ensured the shared repository includes relevant assets and documentation.</p>
+                <p class="is-size-7" style="opacity:.85;">(Add the team GitHub URL here if you want it shown.)</p>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODE (CLEANED: REMOVE DUPLICATION, KEEP DEFENDABLE CORE) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Core Code (Cleaned for Evaluation)</h2>
+
+            <div class="soft-card" style="margin-bottom:1rem;">
+              <p style="margin-bottom:.5rem;">
+                Below is a <b>cleaned</b> version of my implementation focusing on what matters for grading:
+                <b>fetch → parse → display (OLED) + decision (LED)</b>.
+                Unnecessary parts were removed to keep it concise and defendable.
+              </p>
+              <div class="chiprow">
+                <span class="chip ok">Concise</span>
+                <span class="chip alt">Easy to defend</span>
+                <span class="chip">OLED + LED in one</span>
+              </div>
+            </div>
+
             <div class="soft-card">
               <div class="code-head">
-                <h3 class="title is-5" style="margin:0;">1) Weather to OLED</h3>
-                <button class="copy-btn" onclick="copyCode('code-oled')">Copy</button>
+                <h3 class="title is-5" style="margin:0;">ESP32 (Wokwi) — OLED + LEDs</h3>
+                <button class="copy-btn" onclick="copyCode('code-clean')">Copy</button>
               </div>
-              <pre><code id="code-oled">#include &lt;WiFi.h&gt;
+
+              <pre><code id="code-clean">#include &lt;WiFi.h&gt;
 #include &lt;WiFiClientSecure.h&gt;
 #include &lt;HTTPClient.h&gt;
 #include &lt;ArduinoJson.h&gt;
@@ -444,310 +566,79 @@
 #include &lt;Adafruit_GFX.h&gt;
 #include &lt;Adafruit_SSD1306.h&gt;
 
-// =============================
-// OLED 설정
-// =============================
+// OLED
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
-
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
+// LEDs
+#define LED_RED     14   // Sunny
+#define LED_YELLOW  12   // Windy
+#define LED_BLUE    27   // Rainy
 
-// =============================
-// WiFi, API 설정
-// =============================
-const char* ssid     = "Wokwi-GUEST";
+// WiFi / API
+const char* ssid = "Wokwi-GUEST";
 const char* password = "";
-
-const char* host    = "https://apihub.kma.go.kr";
+const char* host = "https://apihub.kma.go.kr";
 const char* authKey = "wLWQLTOfRxC1kC0zn7cQ2g";
 
-// 서울 격자 (60,127)
+// Grid (example: Seoul)
 int nx = 60;
 int ny = 127;
 
-// KST NTP
-const long  gmtOffset_sec      = 9 * 3600;
-const int   daylightOffset_sec = 0;
-const char* ntpServer          = "pool.ntp.org";
+// NTP (KST)
+const long gmtOffset_sec = 9 * 3600;
+const int daylightOffset_sec = 0;
+const char* ntpServer = "pool.ntp.org";
 
-
-// =======================================
-// setup()
-// =======================================
 void setup() {
   Serial.begin(115200);
   delay(500);
 
-  // OLED 초기화
-  Wire.begin(21, 22);  // ESP32: SDA=21, SCL=22
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+  // OLED init
+  Wire.begin(21, 22);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println("OLED INIT FAIL!");
     while (1);
   }
-  display.clearDisplay();
-  display.display();
+
+  // LED init
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_YELLOW, OUTPUT);
+  pinMode(LED_BLUE, OUTPUT);
 
   // WiFi
-  Serial.print("Connecting to WiFi");
   WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
     delay(300);
   }
   Serial.println("\nWiFi Connected!");
-  Serial.print("IP: ");
-  Serial.println(WiFi.localIP());
 
-  // NTP
+  // NTP sync
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-  Serial.println("Waiting NTP...");
   struct tm timeinfo;
   while (!getLocalTime(&timeinfo)) {
-    Serial.println("Retry...");
-    delay(500);
+    delay(300);
   }
   Serial.println("Time synced!");
 
-  // 첫 조회
-  getWeatherNow();
+  // First fetch
+  fetchAndRender();
 }
 
 void loop() {
-  // 필요 시 주기 호출
-  delay(60000);
-  getWeatherNow();
+  delay(60000); // refresh every 60s
+  fetchAndRender();
 }
 
-
-// ========================================================
-// 기상청 API 요청 생성
-// ========================================================
-void getWeatherNow() {
+void fetchAndRender() {
   if (WiFi.status() != WL_CONNECTED) return;
 
+  // base date/time (if minutes &lt; 15, use previous hour)
   struct tm timeinfo;
   getLocalTime(&timeinfo);
-
-  time_t now = mktime(&timeinfo);
-  if (timeinfo.tm_min < 15) now -= 3600;
-  struct tm* baseTm = localtime(&now);
-
-  char baseDate[9];
-  sprintf(baseDate, "%04d%02d%02d",
-          baseTm-&gt;tm_year + 1900,
-          baseTm-&gt;tm_mon + 1,
-          baseTm-&gt;tm_mday);
-  String base_date = baseDate;
-
-  char baseTime[5];
-  sprintf(baseTime, "%02d00", baseTm-&gt;tm_hour);
-  String base_time = baseTime;
-
-  // URL 구성
-  String url = String(host) +
-    "/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst"
-    "?authKey=" + authKey +
-    "&dataType=JSON"
-    "&numOfRows=60"
-    "&pageNo=1"
-    "&base_date=" + base_date +
-    "&base_time=" + base_time +
-    "&nx=" + nx +
-    "&ny=" + ny;
-
-  Serial.println("Request URL:");
-  Serial.println(url);
-
-  WiFiClientSecure client;
-  client.setInsecure();
-
-  HTTPClient http;
-  http.setTimeout(20000);
-
-  if (!http.begin(client, url)) {
-    Serial.println("HTTP begin fail");
-    return;
-  }
-
-  int code = http.GET();
-  if (code == HTTP_CODE_OK) {
-    parseWeatherJson(http.getString(), base_date, base_time);
-  } else {
-    Serial.print("HTTP ERROR: ");
-    Serial.println(code);
-  }
-  http.end();
-}
-
-
-// ========================================================
-// JSON 파싱 + OLED 출력
-// ========================================================
-void parseWeatherJson(const String& json, const String& base_date, const String& base_time) {
-  DynamicJsonDocument doc(16384);
-  DeserializationError error = deserializeJson(doc, json);
-
-  if (error) {
-    Serial.println("JSON error");
-    return;
-  }
-
-  JsonVariant items = doc["response"]["body"]["items"]["item"];
-  if (items.isNull()) {
-    Serial.println("No data");
-    return;
-  }
-
-  float T1H = NAN; 
-  float REH = NAN;
-  float RN1 = NAN;
-  float VEC = NAN;
-  float WSD = NAN;
-
-  for (JsonObject item : items.as&lt;JsonArray&gt;()) {
-    String cat = item["category"];
-    float  val = String(item["obsrValue"]).toFloat();
-
-    if (cat == "T1H") T1H = val;
-    if (cat == "REH") REH = val;
-    if (cat == "RN1") RN1 = val;
-    if (cat == "VEC") VEC = val;
-    if (cat == "WSD") WSD = val;
-  }
-
-  // OLED 출력
-  display.clearDisplay();
-  display.setTextSize(1); 
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 0);
-
-  display.printf("Temp: %.1f C\n", T1H);  
-  display.printf("Humid: %.0f %%\n", REH);  
-  display.printf("Rain: %.1f mm\n", RN1);  
-  display.printf("Wind: %.0f%c / %.1f m/s\n", VEC, 248, WSD); // 248 = °
-  display.display();
-}</code></pre>
-            </div>
-
-            <br>
-
-            <!-- LED code -->
-            <div class="soft-card">
-              <div class="code-head">
-                <h3 class="title is-5" style="margin:0;">2) LED Indicators + OLED</h3>
-                <button class="copy-btn" onclick="copyCode('code-led')">Copy</button>
-              </div>
-              <pre><code id="code-led">#include &lt;WiFi.h&gt;
-#include &lt;WiFiClientSecure.h&gt;
-#include &lt;HTTPClient.h&gt;
-#include &lt;ArduinoJson.h&gt;
-#include &lt;time.h&gt;
-
-#include &lt;Wire.h&gt;
-#include &lt;Adafruit_GFX.h&gt;
-#include &lt;Adafruit_SSD1306.h&gt;
-
-// =============================
-// OLED 설정
-// =============================
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
-
-// =============================
-// LED PIN 설정
-// =============================
-#define LED_RED     14   // Sunny
-#define LED_YELLOW  12   // Windy
-#define LED_BLUE    27   // Rainy
-
-// -----------------------------
-// WiFi, API 설정
-// -----------------------------
-const char* ssid     = "Wokwi-GUEST";
-const char* password = "";
-
-const char* host    = "https://apihub.kma.go.kr";
-const char* authKey = "wLWQLTOfRxC1kC0zn7cQ2g";
-
-const long  gmtOffset_sec = 9 * 3600;
-const int   daylightOffset_sec = 0;
-const char* ntpServer = "pool.ntp.org";
-
-// -----------------------------
-// 기본 격자 좌표
-// -----------------------------
-int nx = 60;
-int ny = 127;
-
-// =============================
-// Setup
-// =============================
-void setup() {
-  Serial.begin(115200);
-  delay(500);
-
-  // OLED
-  Wire.begin(21, 22);
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-    Serial.println("OLED INIT FAIL!");
-    while (1);
-  }
-  display.clearDisplay();
-  display.display();
-
-  // LED 핀모드
-  pinMode(LED_RED, OUTPUT);
-  pinMode(LED_YELLOW, OUTPUT);
-  pinMode(LED_BLUE, OUTPUT);
-
-  // WiFi 연결
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(300);
-  }
-  Serial.println("\nConnected!");
-
-  // 시간 동기화
-  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-  struct tm timeinfo;
-  while (!getLocalTime(&timeinfo)) {
-    delay(300);
-  }
-
-  // 첫 조회
-  getWeatherNow();
-}
-
-// =============================
-// Loop → Serial 입력 체크
-// =============================
-void loop() {
-  if (Serial.available()) {
-    int newX = Serial.parseInt();
-    int newY = Serial.parseInt();
-
-    if (newX &gt; 0 && newY &gt; 0) {
-      nx = newX;
-      ny = newY;
-      getWeatherNow();
-    }
-  }
-  delay(100);
-}
-
-// =============================
-// 기상청 API 요청
-// =============================
-void getWeatherNow() {
-  if (WiFi.status() != WL_CONNECTED) return;
-
-  struct tm timeinfo;
-  getLocalTime(&timeinfo);
-
   time_t now = mktime(&timeinfo);
   if (timeinfo.tm_min &lt; 15) now -= 3600;
   struct tm* bt = localtime(&now);
@@ -769,70 +660,80 @@ void getWeatherNow() {
     "&nx=" + nx +
     "&ny=" + ny;
 
+  Serial.println("\nRequest URL:");
+  Serial.println(url);
+
   WiFiClientSecure client;
   client.setInsecure();
   HTTPClient http;
+  http.setTimeout(20000);
 
   if (!http.begin(client, url)) return;
 
   int code = http.GET();
-  if (code == HTTP_CODE_OK)
-    parseWeatherJson(http.getString());
-
+  if (code == HTTP_CODE_OK) {
+    parseAndDisplay(http.getString());
+  } else {
+    Serial.print("HTTP ERROR: ");
+    Serial.println(code);
+  }
   http.end();
 }
 
-// =============================
-// JSON 파싱 + OLED + LED
-// =============================
-void parseWeatherJson(const String& json) {
+void parseAndDisplay(const String& json) {
   DynamicJsonDocument doc(16384);
-
-  if (deserializeJson(doc, json)) return;
+  if (deserializeJson(doc, json)) {
+    Serial.println("JSON parse error");
+    return;
+  }
 
   JsonVariant items = doc["response"]["body"]["items"]["item"];
-  if (items.isNull()) return;
+  if (items.isNull()) {
+    Serial.println("No items");
+    return;
+  }
 
-  float T1H=NAN, REH=NAN, RN1=NAN, WSD=NAN, VEC=NAN;
+  float T1H = NAN, REH = NAN, RN1 = NAN, VEC = NAN, WSD = NAN;
 
   for (JsonObject it : items.as&lt;JsonArray&gt;()) {
     String cat = it["category"];
     float v = String(it["obsrValue"]).toFloat();
 
-    if (cat=="T1H") T1H=v;
-    if (cat=="REH") REH=v;
-    if (cat=="RN1") RN1=v;
-    if (cat=="VEC") VEC=v;
-    if (cat=="WSD") WSD=v;
+    if (cat == "T1H") T1H = v;
+    if (cat == "REH") REH = v;
+    if (cat == "RN1") RN1 = v;
+    if (cat == "VEC") VEC = v;
+    if (cat == "WSD") WSD = v;
   }
 
-  // LED 점등 (우선순위: Rainy &gt; Windy &gt; Sunny)
+  // ✅ LED rules (priority: Rainy &gt; Windy &gt; Sunny)
   if (RN1 &gt; 0) {
     digitalWrite(LED_BLUE, HIGH);
-    digitalWrite(LED_RED, LOW);
     digitalWrite(LED_YELLOW, LOW);
-  }
-  else if (VEC &gt;= 3.5) {
+    digitalWrite(LED_RED, LOW);
+    Serial.println("LED: Rainy (Blue)");
+  } else if (VEC &gt;= 3.5) {
     digitalWrite(LED_YELLOW, HIGH);
-    digitalWrite(LED_RED, LOW);
     digitalWrite(LED_BLUE, LOW);
-  }
-  else if (RN1 == 0 && REH &lt;= 50) {
+    digitalWrite(LED_RED, LOW);
+    Serial.println("LED: Windy (Yellow)");
+  } else if (RN1 == 0 && REH &lt;= 50) {
     digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_YELLOW, LOW);
     digitalWrite(LED_BLUE, LOW);
-  }
-  else {
+    digitalWrite(LED_YELLOW, LOW);
+    Serial.println("LED: Sunny (Red)");
+  } else {
     digitalWrite(LED_RED, LOW);
     digitalWrite(LED_YELLOW, LOW);
     digitalWrite(LED_BLUE, LOW);
+    Serial.println("LED: OFF");
   }
 
-  // OLED 출력
+  // ✅ OLED output (4 lines)
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,0);
+  display.setCursor(0, 0);
 
   display.printf("Temp: %.1f C\n", T1H);
   display.printf("Humid: %.0f %%\n", REH);
@@ -840,6 +741,8 @@ void parseWeatherJson(const String& json) {
   display.printf("Wind: %.0fdeg / %.1fm/s\n", VEC, WSD);
 
   display.display();
+
+  Serial.println("=== Updated ===");
 }</code></pre>
             </div>
 
@@ -849,72 +752,73 @@ void parseWeatherJson(const String& json) {
     </div>
   </section>
 
-  <!-- HOW TO RUN + FAQ (DEFENSE) -->
+  <!-- DEMO STEPS + DEFENSE -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">How to Run (Demo Steps) + Defense (FAQ)</h2>
+            <h2 class="title is-3 section-title">Demo Plan (What I Will Show) + Defense (FAQ)</h2>
 
             <div class="grid-2">
+
               <div class="soft-card">
-                <h3 class="title is-5" style="margin-bottom:.5rem;">Demo Steps (what I will show)</h3>
+                <h3 class="title is-5" style="margin-bottom:.5rem;">My Demo Flow (Exam-style)</h3>
                 <ol class="mini-list">
-                  <li>Run ESP32 simulation in <b>Wokwi</b>.</li>
-                  <li>Confirm <b>WiFi connected</b> and <b>NTP time synced</b> in Serial.</li>
-                  <li>Observe OLED: Temp/Humid/Rain/Wind updates.</li>
-                  <li>Trigger different conditions (by changing grid or waiting for data change) and show LEDs:
-                    <b>Blue</b>(Rain) / <b>Yellow</b>(Wind) / <b>Red</b>(Sunny).</li>
+                  <li>Open Wokwi projects:
+                    <ul>
+                      <li><a href="https://wokwi.com/projects/447578913862710273" target="_blank" rel="noopener noreferrer"><b>OLED demo</b></a></li>
+                      <li><a href="https://wokwi.com/projects/448217235414653953" target="_blank" rel="noopener noreferrer"><b>LEDs demo</b></a></li>
+                    </ul>
+                  </li>
+                  <li>Run simulation and show Serial proof (URL + parsed values).</li>
+                  <li>Show OLED output updates (Temp/Humid/Rain/Wind).</li>
+                  <li>Explain LED rules and show LED behavior (Blue / Yellow / Red).</li>
+                  <li>Conclude with how my output integrates into the full team system.</li>
                 </ol>
                 <div class="chiprow">
                   <span class="chip ok">Live demo</span>
-                  <span class="chip alt">Serial proof</span>
+                  <span class="chip alt">Evidence (Serial)</span>
                   <span class="chip">OLED output</span>
                   <span class="chip">LED behavior</span>
                 </div>
               </div>
 
               <div class="soft-card faq">
-                <h3 class="title is-5" style="margin-bottom:.5rem;">Defense / FAQ (prof-style questions)</h3>
+                <h3 class="title is-5" style="margin-bottom:.5rem;">Defense / FAQ</h3>
 
                 <details open>
-                  <summary>Why use NTP and base_time adjustment?</summary>
+                  <summary>Why use NTP and base-time alignment (minutes &lt; 15)?</summary>
                   <div style="margin-top:.45rem;">
-                    KMA ultra-short observations are updated at fixed times. If the current minute is &lt; 15,
-                    the latest available dataset may still be the previous hour, so I adjust the base time for reliable fetching.
+                    Ultra-short observations are updated at specific times. If the current minute is under 15,
+                    the newest valid dataset may still be from the previous hour. I align base_time to avoid requesting missing data.
                   </div>
                 </details>
 
                 <details>
-                  <summary>How do you know parsing is correct?</summary>
+                  <summary>How do you prove your LED decisions are correct?</summary>
                   <div style="margin-top:.45rem;">
-                    I print the request URL and parsed values (T1H/REH/RN1/VEC/WSD) to Serial,
-                    then verify they match expected units and OLED output format.
+                    I log the parsed values (RN1, VEC, REH) and the chosen LED state to Serial.
+                    This makes the rule evaluation transparent and defendable.
                   </div>
                 </details>
 
                 <details>
                   <summary>Why prioritize Rainy over Windy/Sunny?</summary>
                   <div style="margin-top:.45rem;">
-                    Rain is a high-impact condition. Priority prevents conflicting LED states and improves user clarity:
-                    if rain exists, show Rainy regardless of other values.
+                    Rain is the most critical condition for immediate user action.
+                    Priority also ensures exactly one LED is active and prevents conflicting states.
                   </div>
                 </details>
 
+                <details>
+                  <summary>What is your Windy threshold?</summary>
+                  <div style="margin-top:.45rem;">
+                    I used <b>VEC ≥ 3.5</b> as the Windy condition in this implementation, as decided for the final evaluation.
+                  </div>
+                </details>
               </div>
-            </div>
 
-            <br>
-
-            <div class="soft-card">
-              <h3 class="title is-5" style="margin-bottom:.5rem;">What I will defend in the final evaluation</h3>
-              <ul class="mini-list">
-                <li><b>Correctness</b>: proven by serial logs + OLED values + LED states.</li>
-                <li><b>Clarity</b>: readable rules, consistent units, and clean OLED layout.</li>
-                <li><b>Integration</b>: KMA API + WiFi + NTP + OLED + LED together.</li>
-                <li><b>Maintainability</b>: modular functions (<code>getWeatherNow()</code>, <code>parseWeatherJson()</code>).</li>
-              </ul>
             </div>
 
           </div>
