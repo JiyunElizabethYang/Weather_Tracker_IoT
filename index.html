@@ -398,7 +398,6 @@
                   <li><b>Goal</b>: Display the latest weather values on an ESP32 OLED.</li>
                   <li><b>UI layout</b>: Temperature, Humid, Rain, Wind</li>
                   <li><b>Wind format</b>: <code>VECdeg / WSDm/s</code> (human-readable and compact).</li>
-                  <li><b>Reliability</b>: Use NTP time sync and fetch from the latest valid base time.</li>
                 </ul>
                 <div class="chiprow">
                   <span class="chip ok">ESP32 OLED</span>
@@ -434,22 +433,27 @@
             <!-- ✅ Added 공간: LED 기준을 자료 기반으로 세웠다는 설명 -->
             <div class="soft-card">
               <h3 class="title is-5" style="margin-bottom:.5rem;">How I Chose the LED Thresholds (Reference-Based)</h3>
+
               <ul class="mini-list">
                 <li>
-                  <b>Windy cutoff</b>: I referenced widely used wind-intensity descriptions (e.g., Beaufort scale ranges) and picked <code>WSD ≥ 8.0 m/s</code> as a practical “feels windy” threshold for a classroom demo.
+                  <b>Windy (Yellow)</b>: Based on the <b>Beaufort wind force scale</b>, a wind speed around
+                  <b>3.4–5.4 m/s</b> corresponds to a <i>gentle breeze</i>, where leaves and small twigs are continuously moving.
+                  Since winds above <b>3.5 m/s</b> are typically noticeable to people in daily life, I set the LED rule to turn
+                  <b>Yellow ON when wind speed (WSD) ≥ 3.5 m/s</b>.
                 </li>
+
                 <li>
-                  <b>Strong-wind warnings</b>: Official warning/advisory criteria are much higher (e.g., around <b>14 m/s</b> sustained wind for strong wind advisories), so the demo threshold is intentionally set lower to show meaningful behavior more often.
-                </li>
-                <li>
-                  <b>Rain / humidity</b>: Rain uses <code>RN1</code> directly, and “Sunny” uses a simple dryness condition (<code>REH ≤ 50</code>) combined with no rain.
+                  <b>Sunny (Red)</b>: In Korea, the commonly referenced comfortable/typical indoor humidity level is around <b>50%</b>,
+                  and according to KMA-related criteria, a humidity range of <b>0–50%</b> can be interpreted as a “clear/dry” condition.
+                  Therefore, I defined the “Sunny” state as <b>no rainfall</b> and <b>humidity ≤ 50%</b>, turning the <b>Red LED ON</b> when
+                  <code>RN1 == 0</code> and <code>REH ≤ 50</code>.
                 </li>
               </ul>
 
               <p class="is-size-7" style="opacity:.9; margin-top:.6rem;">
-                References (for transparency): 
+                References: 
                 <a href="https://en.wikipedia.org/wiki/Beaufort_scale" target="_blank" rel="noopener noreferrer">Beaufort scale</a> ·
-                <a href="https://www.kma.go.kr/neng/forecast/warning.do" target="_blank" rel="noopener noreferrer">KMA warning/advisory criteria</a>
+                <<a href="https://m.blog.naver.com/mrikor/223094161342?referrerCode=1" target="_blank" rel="noopener noreferrer">KMA standard (Summary)</a>
               </p>
             </div>
 
@@ -531,13 +535,13 @@
 
             <div class="soft-card" style="margin-bottom:1rem;">
               <p style="margin-bottom:.5rem;">
-                Below are the core parts of my implementation split into two blocks:
+                Below are the codes of my implementation split into two blocks:
                 <b>(1) OLED weather rendering</b> and <b>(2) LED indicator logic</b>.
-                This makes the code easier to present and defend during evaluation.
+                
               </p>
               <div class="chiprow">
                 <span class="chip ok">Split by function</span>
-                <span class="chip alt">Clear demonstration</span>
+                <span class="chip alt">Clean Version</span>
                 <span class="chip">OLED</span>
                 <span class="chip">LEDs</span>
               </div>
