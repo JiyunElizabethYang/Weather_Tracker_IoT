@@ -2,213 +2,895 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Weather Tracker IoT - Jiyun Yang's Implementation">
+
+  <!-- ✅ Social / SEO (fill og:url + og:image if you want) -->
+  <meta name="description" content="Weather Tracker IoT - Jiyun Yang's Implementation (OLED Weather Display + LED Indicators + Presentation Deliverables)">
+  <meta property="og:title" content="Weather Tracker IoT | Jiyun Yang"/>
+  <meta property="og:description" content="OLED weather output + LED indicator logic on ESP32 (Wokwi) using KMA API. Includes demo, code, and deliverables."/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <meta property="og:image" content="static/images/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="Weather Tracker IoT | Jiyun Yang">
+  <meta name="twitter:description" content="OLED weather output + LED indicator logic on ESP32 (Wokwi) using KMA API. Includes demo, code, and deliverables.">
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="keywords" content="IoT, ESP32, Wokwi, OLED, SSD1306, KMA API, Weather, LED Indicators, Project Page">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="icon" type="image/x-icon" href="static/images/sejong.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <meta charset="UTF-8">
   <title>Weather Tracker IoT | Jiyun Yang</title>
 
-  <link rel="icon" href="static/images/sejong.png">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-
   <style>
+    :root{
+      --grad: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
+      --shadow: 0 8px 16px rgba(0,0,0,0.25);
+      --cardshadow: 0 10px 20px rgba(0,0,0,0.18);
+      --radius: 14px;
+    }
+
     body { font-family: "Noto Sans", sans-serif; }
 
+    /* Hero title */
     .publication-title {
       font-size: 3rem;
       font-weight: 900;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      line-height: 1.1;
     }
-
     .title-text {
-      background: linear-gradient(90deg, #0575e6, #7928ca, #ff0080);
+      background: linear-gradient(90deg, #00f260, #0575e6, #ff0080, #7928ca);
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.08),
+        4px 4px 10px rgba(0, 0, 0, 0.18);
+      animation: gradientShift 25s infinite ease-in-out;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 48% 50%; }
+      50% { background-position: 52% 50%; }
+      100% { background-position: 48% 50%; }
     }
 
+    /* Buttons */
     .publication-links .button {
+      background: linear-gradient(45deg, #00f260, #0575e6, #ff0080, #7928ca);
+      background-size: 300% 300%;
+      color: white !important;
       font-weight: 800;
       border: none;
-      color: white !important;
-      background: linear-gradient(45deg, #00f260, #0575e6, #7928ca);
+      transition: background-position 2.5s ease;
+    }
+    .publication-links .button:hover { background-position: 100% 50%; }
+    .publication-links .link-block { margin: 0 0.35rem; }
+
+    /* ✅ Team Page button (same shape, slightly different color emphasis) */
+    .publication-links .button.team-btn{
+      background: linear-gradient(45deg, #2dd4bf, #3b82f6, #8b5cf6);
+      background-size: 300% 300%;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .publication-links .button.team-btn:hover{
+      background-position: 100% 50%;
+      transform: translateY(-1px);
     }
 
-    /* ⭐ Team Page 강조 (색만 다르게) */
-    .team-highlight {
-      background: linear-gradient(45deg, #7928ca, #0575e6) !important;
-    }
-
+    /* ✅ Consistent section title box */
     .section-title {
-      background: linear-gradient(45deg, #f200b571, #0077ff5b, #2881cad7);
-      color: white;
-      padding: 12px;
+      background: var(--grad);
+      color: white !important;
+      padding: 12px 14px;
       border-radius: 12px;
+      box-shadow: var(--shadow);
       text-align: center;
-      margin-bottom: 1rem;
+      display: block;
+      width: 100%;
+      margin: 0 auto 14px auto;
+    }
+
+    /* Layout helpers */
+    .soft-card{
+      border-radius: var(--radius);
+      box-shadow: var(--cardshadow);
+      border: 1px solid rgba(0,0,0,0.06);
+      background: linear-gradient(45deg, rgba(5,117,230,0.08), rgba(242,0,181,0.06));
+      padding: 1.05rem 1.1rem;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media(min-width: 900px){
+      .grid-2{ grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Chips */
+    .chiprow{ display:flex; flex-wrap:wrap; gap: .45rem; margin-top:.6rem; }
+    .chip{
+      font-size:.78rem;
+      font-weight: 800;
+      padding:.22rem .62rem;
+      border-radius: 999px;
+      background: rgba(121,40,202,0.16);
+      border: 1px solid rgba(121,40,202,0.22);
+      white-space: nowrap;
+    }
+    .chip.alt{
+      background: rgba(5,117,230,0.14);
+      border: 1px solid rgba(5,117,230,0.22);
+    }
+    .chip.ok{
+      background: rgba(0,242,96,0.12);
+      border: 1px solid rgba(0,242,96,0.20);
+    }
+
+    /* Code blocks */
+    pre {
+      border-radius: 14px;
+      box-shadow: var(--cardshadow);
+      border: 1px solid rgba(0,0,0,0.08);
+      overflow: auto;
+    }
+    .code-head{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: .8rem;
+      margin-bottom: .4rem;
+    }
+    .copy-btn{
+      border: none;
+      border-radius: 999px;
+      padding: .35rem .75rem;
+      font-weight: 800;
+      cursor: pointer;
+      background: rgba(0,0,0,0.08);
+    }
+    .copy-btn:hover{ background: rgba(0,0,0,0.12); }
+
+    /* Demo media */
+    .media-frame{
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.28);
+      overflow: hidden;
+      background: linear-gradient(45deg, #0575e6, #7928ca81);
+      padding: 10px;
+    }
+    .media-frame video, .media-frame img{
+      display:block;
+      width:100%;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Emphasis text */
+    .grad-emph{
+      background: linear-gradient(90deg, #ff0080, #7928ca, #0575e6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       font-weight: 900;
     }
 
-    .soft-card {
+    /* Small list spacing */
+    .mini-list li{ margin: .35rem 0; line-height: 1.45; }
+
+    /* FAQ */
+    .faq details{
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.06);
       border-radius: 14px;
-      padding: 1.1rem;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.18);
-      background: #fafafa;
-      margin-bottom: 1rem;
+      padding: .75rem .85rem;
+    }
+    .faq details + details{ margin-top: .6rem; }
+    .faq summary{ cursor: pointer; font-weight: 900; }
+
+    /* Deliverables cards */
+    .deliver-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media(min-width: 900px){
+      .deliver-grid{ grid-template-columns: 1fr 1fr; }
     }
 
-    pre {
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.18);
+    /* ✅ clickable deliverables */
+    .deliver-link{
+      display:block;
+      text-decoration:none !important;
+      color: inherit;
     }
+    .deliver-item{
+      border-radius: var(--radius);
+      box-shadow: var(--cardshadow);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 1.0rem 1.05rem;
+      background: linear-gradient(45deg, rgba(121,40,202,0.10), rgba(5,117,230,0.08));
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .deliver-link:hover .deliver-item{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+    }
+    .deliver-item .title{ margin-bottom: .35rem; }
 
-    .result-img {
-      margin-top: .6rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-      width: 100%;
-    }
+    /* Make anchors look clean */
+    a { word-break: break-word; }
   </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="publication-title">
-        <span class="title-text">Weather Tracker IoT</span>
-      </h1>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
 
-      <p class="has-text-centered is-size-5">
-        Jiyun Yang<br>
-        Sejong University – Intelligent Mechatronics Engineering
-      </p>
+            <h1 class="title publication-title">
+              <span class="title-text">Weather Tracker IoT</span>
+            </h1>
 
-      <div class="has-text-centered publication-links">
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://jiyunelizabethyang.github.io/Weather_Tracker_IoT/" target="_blank" rel="noopener noreferrer">Jiyun Yang</a><sup>1</sup>
+              </span>
+              <br>
+            </div>
 
-        <a class="button is-rounded team-highlight"
-           href="https://jiyunelizabethyang.github.io/IoT-C/" target="_blank">
-          <i class="fas fa-users"></i>&nbsp; Team Page
-        </a>
+            <br>
 
-        <a class="button is-rounded"
-           href="https://wokwi.com/projects/447578913862710273" target="_blank">
-          OLED Demo
-        </a>
+            <div class="is-size-5 publication-authors">
+              <div style="text-align:center; margin-bottom: 8px;">
+                <span class="author-block"><sup>1</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span><br>
+              </div>
+            </div>
 
-        <a class="button is-rounded"
-           href="https://wokwi.com/projects/448217235414653953" target="_blank">
-          LED Demo
-        </a>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="https://jiyunelizabethyang.github.io/IoT-C/"
+                    target="_blank" rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark team-btn">
+                    <span class="icon">
+                      <i class="fas fa-users"></i>
+                    </span>
+                    <span>Team Page</span>
+                  </a>
+                </span>
+
+                <!-- ✅ Wokwi links (provided) -->
+                <span class="link-block">
+                  <a href="https://wokwi.com/projects/447578913862710273"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-tv" style="color:#fff;"></i></span>
+                    <span>Wokwi (OLED)</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://wokwi.com/projects/448217235414653953"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-lightbulb" style="color:#fff;"></i></span>
+                    <span>Wokwi (LEDs)</span>
+                  </a>
+                </span>
+
+                <!-- ✅ Mid Slides -->
+                <span class="link-block">
+                  <a href="https://www.miricanvas.com/v2/design2/99b34be6-3e93-4f9a-a08f-2f3f2e6b80e4"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-alt" style="color:#D3D3D3;"></i></span>
+                    <span>Midterm Slides</span>
+                  </a>
+                </span>
+                <!-- ✅ Final Slides -->
+                <span class="link-block">
+                  <a href="https://www.miricanvas.com/v2/design2/b5ef6afd-445e-4750-8d92-b87fea76e252"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-alt" style="color:#D3D3D3;"></i></span>
+                    <span>Final Slides</span>
+                  </a>
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ROLE -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">My Role in the Team Project</h2>
+  <!-- WELCOME + WHAT I DID (PROF REQUIREMENTS) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Welcome to "Jiyun Yang's Project Page"</h2>
 
-    <div class="soft-card">
-      <ul>
-        <li>Implemented real-time weather output on the SSD1306 OLED display.</li>
-        <li>Designed and implemented LED indicator logic based on weather conditions.</li>
-        <li>Prepared all presentation materials:
-          Midterm PPT, Final PPT, Team Webpage, and Team GitHub repository.
-        </li>
-      </ul>
+            <div class="soft-card">
+              <p style="margin-bottom:.6rem;">
+                This page is a personal project report for the team project <b>Weather Tracker IoT</b>.
+                It presents <b>my role</b>, <b>my implementation details</b>, and a <b>demo</b>.
+              </p>
+
+              <p style="margin-top:.7rem; margin-bottom:.4rem;"><b>My responsibilities:</b></p>
+              <ul class="mini-list">
+                <li><b>OLED Weather Output</b>: Display real-time weather values on the SSD1306 OLED.</li>
+                <li><b>LED Sensor Code</b>: Implement rule-based LED indicators (Sunny/Windy/Rainy).</li>
+                <li><b>Presentation & Materials</b>: Create and prepare
+                  <b>Midterm Slides</b>, <b>Team Webpage</b>, <b>Team GitHub</b>, and <b>Final Slides</b>.
+                </li>
+              </ul>
+
+              <div class="chiprow">
+                <span class="chip ok">OLED Output</span>
+                <span class="chip ok">LED Logic</span>
+                <span class="chip alt">Presentation Materials</span>
+                <span class="chip alt">Team Webpage & GitHub</span>
+                <span class="chip">Wokwi Demo</span>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="media-frame">
+              <video id="demo" autoplay controls muted loop>
+                <source src="static/videos/project.mp4" type="video/mp4">
+              </video>
+            </div>
+            <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
+              Demo video: OLED shows (Temp/Humid/Rain/Wind) and LEDs indicate Sunny/Windy/Rainy based on weather conditions.
+            </p>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- LED DESIGN RATIONALE -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">Design Rationale for LED Conditions</h2>
+  <!-- OVERVIEW -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Project Overview</h2>
 
-    <div class="soft-card">
-      <p>
-        The LED indicator conditions were defined after reviewing common weather interpretation
-        guidelines and IoT visualization practices.
-        In many meteorological services, rainfall is treated as the most explicit indicator of
-        current weather, followed by strong wind conditions and clear weather signals.
-      </p>
+            <div class="grid-2">
+              <div class="soft-card">
+                <p style="margin-bottom:.5rem;">
+                  <b><span class="grad-emph">What the project does</span></b>
+                </p>
+                <ul class="mini-list">
+                  <li>Fetches real-time weather observations from the <b>Korea Meteorological Administration (KMA) API Hub</b>.</li>
+                  <li>Parses JSON categories:
+                    <b>T1H</b> (Temperature), <b>REH</b> (Humidity), <b>RN1</b> (Rainfall),
+                    <b>VEC</b> (Wind direction), <b>WSD</b> (Wind speed).
+                  </li>
+                  <li>Visualizes data using an <b>OLED</b> display and <b>LED indicators</b> in a simulated ESP32 environment.</li>
+                </ul>
+                <div class="chiprow">
+                  <span class="chip alt">KMA API</span>
+                  <span class="chip">JSON</span>
+                  <span class="chip ok">OLED</span>
+                  <span class="chip ok">LEDs</span>
+                </div>
+              </div>
 
-      <p>
-        Based on these references, rainfall amount (RN1), wind direction/speed (VEC, WSD),
-        and humidity (REH) were selected as key parameters.
-        The goal was to ensure that each LED state represents a clearly distinguishable
-        real-world weather situation.
-      </p>
+              <div class="soft-card">
+                <p style="margin-bottom:.5rem;">
+                  <b><span class="grad-emph">My part</span></b>
+                </p>
+                <ul class="mini-list">
+                  <li>Designed a clear <b>4-line OLED UI</b> (Temp / Humid / Rain / Wind).</li>
+                  <li>Implemented <b>deterministic LED rules</b> using weather-related references to set thresholds.</li>
+                  <li>Provided <b>defendable evidence</b> using Serial logs (URL + parsed values).</li>
+                  <li>Prepared and organized <b>project deliverables</b> (Slides + web/GitHub materials).</li>
+                </ul>
+                <div class="chiprow">
+                  <span class="chip ok">Defendable</span>
+                  <span class="chip">Clear thresholds</span>
+                  <span class="chip alt">Documentation</span>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="media-frame">
+              <img src="static/images/overview photo.png" alt="Project overview image">
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CODE: OLED -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">OLED Weather Display Code</h2>
+  <!-- METHOD (FOCUS: JIYUN PART) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Method (My Implementation)</h2>
 
-    <div class="soft-card">
-<pre><code>// OLED displays temperature, humidity, rainfall, and wind info
-// Data fetched from KMA API and updated every minute
-</code></pre>
+            <div class="grid-2">
 
-      <img src="static/images/oled_result.png"
-           alt="OLED output result"
-           class="result-img">
+              <div class="soft-card">
+                <h3 class="title is-5" style="margin-bottom:.5rem;">A) OLED Weather Output</h3>
+                <ul class="mini-list">
+                  <li><b>Goal</b>: Display the latest weather values on an SSD1306 OLED (128×64).</li>
+                  <li><b>UI layout</b>: 4 lines to fit the screen cleanly.</li>
+                  <li><b>Wind format</b>: <code>VECdeg / WSDm/s</code> (human-readable and compact).</li>
+                  <li><b>Reliability</b>: Use NTP time sync and fetch from the latest valid base time.</li>
+                </ul>
+                <div class="chiprow">
+                  <span class="chip ok">SSD1306</span>
+                  <span class="chip alt">NTP Sync</span>
+                  <span class="chip">Readable UI</span>
+                </div>
+              </div>
+
+              <div class="soft-card">
+                <h3 class="title is-5" style="margin-bottom:.5rem;">B) LED Indicator Rules</h3>
+                <p style="margin-bottom:.5rem;">
+                  The LED thresholds were chosen after reviewing common meteorological guidance (e.g., how wind strength is described on the Beaufort scale,
+                  and how “strong wind” criteria are defined in official weather warnings). For this project demo, I selected simple, explainable cutoffs that map well to everyday conditions.
+                </p>
+
+                <ul class="mini-list">
+                  <li><b>Rainy (Blue)</b>: <code>RN1 &gt; 0</code> (precipitation detected)</li>
+                  <li><b>Windy (Yellow)</b>: <code>WSD &gt;= 8.0</code> (noticeably strong wind for daily life)</li>
+                  <li><b>Sunny (Red)</b>: <code>RN1 == 0 AND REH &lt;= 50</code> (dry &amp; clear condition)</li>
+                </ul>
+
+                <div class="chiprow">
+                  <span class="chip ok">Explainable rules</span>
+                  <span class="chip">Weather-based thresholds</span>
+                  <span class="chip alt">Easy to demonstrate</span>
+                </div>
+              </div>
+
+            </div>
+
+            <br>
+
+            <!-- ✅ Added 공간: LED 기준을 자료 기반으로 세웠다는 설명 -->
+            <div class="soft-card">
+              <h3 class="title is-5" style="margin-bottom:.5rem;">How I Chose the LED Thresholds (Reference-Based)</h3>
+              <ul class="mini-list">
+                <li>
+                  <b>Windy cutoff</b>: I referenced widely used wind-intensity descriptions (e.g., Beaufort scale ranges) and picked <code>WSD ≥ 8.0 m/s</code> as a practical “feels windy” threshold for a classroom demo.
+                </li>
+                <li>
+                  <b>Strong-wind warnings</b>: Official warning/advisory criteria are much higher (e.g., around <b>14 m/s</b> sustained wind for strong wind advisories), so the demo threshold is intentionally set lower to show meaningful behavior more often.
+                </li>
+                <li>
+                  <b>Rain / humidity</b>: Rain uses <code>RN1</code> directly, and “Sunny” uses a simple dryness condition (<code>REH ≤ 50</code>) combined with no rain.
+                </li>
+              </ul>
+
+              <p class="is-size-7" style="opacity:.9; margin-top:.6rem;">
+                References (for transparency): 
+                <a href="https://en.wikipedia.org/wiki/Beaufort_scale" target="_blank" rel="noopener noreferrer">Beaufort scale</a> ·
+                <a href="https://www.kma.go.kr/neng/forecast/warning.do" target="_blank" rel="noopener noreferrer">KMA warning/advisory criteria</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CODE: LED -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">LED Indicator Code</h2>
+  <!-- DELIVERABLES (PPT / TEAM WEB / TEAM GITHUB) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Deliverables I Prepared</h2>
 
-    <div class="soft-card">
-<pre><code>
-// LED conditions based on weather data
-// Blue : Rain detected (RN1 > 0)
-// Yellow : Windy condition (VEC >= 3.5)
-// Red : Clear and dry condition (RN1 == 0 && REH <= 50)
-</code></pre>
+            <div class="soft-card" style="margin-bottom:1rem;">
+              <p style="margin-bottom:.5rem;">
+                In addition to coding, I created and prepared key deliverables required for evaluation and teamwork.
+              </p>
+              <div class="chiprow">
+                <span class="chip ok">Midterm Slides</span>
+                <span class="chip ok">Final Slides</span>
+                <span class="chip alt">Team Webpage</span>
+                <span class="chip alt">Team GitHub</span>
+              </div>
+            </div>
 
-      <img src="static/images/led_result.png"
-           alt="LED output result"
-           class="result-img">
+            <div class="deliver-grid">
+
+              <a class="deliver-link" href="https://www.miricanvas.com/v2/design2/99b34be6-3e93-4f9a-a08f-2f3f2e6b80e4" target="_blank" rel="noopener noreferrer">
+                <div class="deliver-item">
+                  <h3 class="title is-5">Midterm Presentation Slides</h3>
+                  <p class="is-size-6">Created and organized slides to explain project scope, method, and progress.</p>
+                  <p class="is-size-7" style="opacity:.85;">Click to open</p>
+                </div>
+              </a>
+
+              <a class="deliver-link" href="https://www.miricanvas.com/v2/design2/b5ef6afd-445e-4750-8d92-b87fea76e252" target="_blank" rel="noopener noreferrer">
+                <div class="deliver-item">
+                  <h3 class="title is-5">Final Presentation Slides</h3>
+                  <p class="is-size-6">Prepared final slides including plans, results, demo, and key contributions.</p>
+                  <p class="is-size-7" style="opacity:.85;">Click to open</p>
+                </div>
+              </a>
+
+              <a class="deliver-link" href="https://jiyunelizabethyang.github.io/IoT-C/" target="_blank" rel="noopener noreferrer">
+                <div class="deliver-item">
+                  <h3 class="title is-5">Team Webpage</h3>
+                  <p class="is-size-6">Designed and developed the group project webpage, creating the structure and writing the content to complete the final version.</p>
+                  <p class="is-size-7" style="opacity:.85;">Click to open</p>
+                </div>
+              </a>
+
+              <a class="deliver-link" href="https://github.com/JiyunElizabethYang/IoT-C" target="_blank" rel="noopener noreferrer">
+                <div class="deliver-item">
+                  <h3 class="title is-5">Team GitHub</h3>
+                  <p class="is-size-6">Set up the GitHub repository, authored the README, and managed basic repository maintenance.</p>
+                  <p class="is-size-7" style="opacity:.85;">Click to open</p>
+                </div>
+              </a>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- DELIVERABLES -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">Deliverables I Prepared</h2>
+  <!-- CODE (SPLIT: OLED vs LEDs) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Wokwi Codes</h2>
 
-    <div class="soft-card">
-      <ul>
-        <li><a href="https://www.miricanvas.com/v2/design2/99b34be6-3e93-4f9a-a08f-2f3f2e6b80e4" target="_blank">
-          Midterm Presentation Slides</a></li>
-        <li><a href="https://www.miricanvas.com/v2/design2/b5ef6afd-445e-4750-8d92-b87fea76e252" target="_blank">
-          Final Presentation Slides</a></li>
-        <li><a href="https://jiyunelizabethyang.github.io/IoT-C/" target="_blank">
-          Team Webpage</a></li>
-        <li><a href="https://github.com/JiyunElizabethYang/IoT-C" target="_blank">
-          Team GitHub Repository</a></li>
-      </ul>
+            <div class="soft-card" style="margin-bottom:1rem;">
+              <p style="margin-bottom:.5rem;">
+                Below are the core parts of my implementation split into two blocks:
+                <b>(1) OLED weather rendering</b> and <b>(2) LED indicator logic</b>.
+                This makes the code easier to present and defend during evaluation.
+              </p>
+              <div class="chiprow">
+                <span class="chip ok">Split by function</span>
+                <span class="chip alt">Clear demonstration</span>
+                <span class="chip">OLED</span>
+                <span class="chip">LEDs</span>
+              </div>
+            </div>
+
+            <!-- ✅ OLED BLOCK -->
+            <div class="soft-card" style="margin-bottom: 1rem;">
+              <div class="code-head">
+                <h3 class="title is-5" style="margin:0;">(A) OLED Weather Output Code</h3>
+                <button class="copy-btn" onclick="copyCode('code-oled')">Copy</button>
+              </div>
+
+              <pre><code id="code-oled">#include &lt;WiFi.h&gt;
+#include &lt;WiFiClientSecure.h&gt;
+#include &lt;HTTPClient.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;time.h&gt;
+
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+
+// OLED
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// WiFi / API
+const char* ssid = "Wokwi-GUEST";
+const char* password = "";
+const char* host = "https://apihub.kma.go.kr";
+const char* authKey = "wLWQLTOfRxC1kC0zn7cQ2g";
+
+// Grid (example: Seoul)
+int nx = 60;
+int ny = 127;
+
+// NTP (KST)
+const long gmtOffset_sec = 9 * 3600;
+const int daylightOffset_sec = 0;
+const char* ntpServer = "pool.ntp.org";
+
+// Parsed values (shared)
+float T1H = NAN, REH = NAN, RN1 = NAN, VEC = NAN, WSD = NAN;
+
+void setupOLED() {
+  Wire.begin(21, 22);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("OLED INIT FAIL!");
+    while (1);
+  }
+}
+
+void renderOLED() {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+
+  display.printf("Temp: %.1f C\n", T1H);
+  display.printf("Humid: %.0f %%\n", REH);
+  display.printf("Rain: %.1f mm\n", RN1);
+  display.printf("Wind: %.0fdeg / %.1fm/s\n", VEC, WSD);
+
+  display.display();
+}
+
+void fetchAndParseWeather() {
+  if (WiFi.status() != WL_CONNECTED) return;
+
+  // base date/time (if minutes &lt; 15, use previous hour)
+  struct tm timeinfo;
+  getLocalTime(&timeinfo);
+  time_t now = mktime(&timeinfo);
+  if (timeinfo.tm_min &lt; 15) now -= 3600;
+  struct tm* bt = localtime(&now);
+
+  char baseDate[9];
+  sprintf(baseDate, "%04d%02d%02d", bt-&gt;tm_year + 1900, bt-&gt;tm_mon + 1, bt-&gt;tm_mday);
+
+  char baseTime[5];
+  sprintf(baseTime, "%02d00", bt-&gt;tm_hour);
+
+  String url = String(host) +
+    "/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst"
+    "?authKey=" + String(authKey) +
+    "&dataType=JSON"
+    "&numOfRows=60"
+    "&pageNo=1"
+    "&base_date=" + String(baseDate) +
+    "&base_time=" + String(baseTime) +
+    "&nx=" + nx +
+    "&ny=" + ny;
+
+  Serial.println("\nRequest URL:");
+  Serial.println(url);
+
+  WiFiClientSecure client;
+  client.setInsecure();
+  HTTPClient http;
+  http.setTimeout(20000);
+
+  if (!http.begin(client, url)) return;
+
+  int code = http.GET();
+  if (code == HTTP_CODE_OK) {
+    String json = http.getString();
+
+    DynamicJsonDocument doc(16384);
+    if (deserializeJson(doc, json)) {
+      Serial.println("JSON parse error");
+      http.end();
+      return;
+    }
+
+    JsonVariant items = doc["response"]["body"]["items"]["item"];
+    if (items.isNull()) {
+      Serial.println("No items");
+      http.end();
+      return;
+    }
+
+    // reset
+    T1H = REH = RN1 = VEC = WSD = NAN;
+
+    for (JsonObject it : items.as&lt;JsonArray&gt;()) {
+      String cat = it["category"];
+      float v = String(it["obsrValue"]).toFloat();
+
+      if (cat == "T1H") T1H = v;
+      if (cat == "REH") REH = v;
+      if (cat == "RN1") RN1 = v;
+      if (cat == "VEC") VEC = v;
+      if (cat == "WSD") WSD = v;
+    }
+
+    Serial.println("Parsed values updated!");
+  } else {
+    Serial.print("HTTP ERROR: ");
+    Serial.println(code);
+  }
+
+  http.end();
+}</code></pre>
+
+              <!-- ✅ 이미지 첨부 공간 (OLED) -->
+              <div class="media-frame" style="margin-top: .8rem;">
+                <!-- 원하는 파일명으로 바꿔도 돼 -->
+                <img src="static/images/oled_result.png" alt="OLED implementation result image">
+              </div>
+              <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
+                (Add your OLED screenshot here) Example: OLED screen showing Temp/Humid/Rain/Wind.
+              </p>
+            </div>
+
+            <!-- ✅ LED BLOCK -->
+            <div class="soft-card">
+              <div class="code-head">
+                <h3 class="title is-5" style="margin:0;">(B) LED Indicator Code</h3>
+                <button class="copy-btn" onclick="copyCode('code-led')">Copy</button>
+              </div>
+
+              <pre><code id="code-led">// LEDs
+#define LED_RED     14   // Sunny
+#define LED_YELLOW  12   // Windy
+#define LED_BLUE    27   // Rainy
+
+void setupLEDs() {
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_YELLOW, OUTPUT);
+  pinMode(LED_BLUE, OUTPUT);
+}
+
+// Uses the latest parsed values: RN1, REH, WSD
+void updateLEDs() {
+  // Rainy (Blue): precipitation detected
+  if (RN1 &gt; 0) {
+    digitalWrite(LED_BLUE, HIGH);
+    digitalWrite(LED_YELLOW, LOW);
+    digitalWrite(LED_RED, LOW);
+    Serial.println("LED: Rainy (Blue)");
+    return;
+  }
+
+  // Windy (Yellow): noticeably windy condition (demo threshold)
+  if (WSD &gt;= 8.0) {
+    digitalWrite(LED_YELLOW, HIGH);
+    digitalWrite(LED_BLUE, LOW);
+    digitalWrite(LED_RED, LOW);
+    Serial.println("LED: Windy (Yellow)");
+    return;
+  }
+
+  // Sunny (Red): dry &amp; clear condition
+  if (RN1 == 0 &amp;&amp; REH &lt;= 50) {
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_BLUE, LOW);
+    digitalWrite(LED_YELLOW, LOW);
+    Serial.println("LED: Sunny (Red)");
+    return;
+  }
+
+  // Otherwise: OFF
+  digitalWrite(LED_RED, LOW);
+  digitalWrite(LED_YELLOW, LOW);
+  digitalWrite(LED_BLUE, LOW);
+  Serial.println("LED: OFF");
+}</code></pre>
+
+              <!-- ✅ 이미지 첨부 공간 (LEDs) -->
+              <div class="media-frame" style="margin-top: .8rem;">
+                <img src="static/images/led_result.png" alt="LED implementation result image">
+              </div>
+              <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
+                (Add your LED screenshot here) Example: LEDs turning ON based on Rain/Wind/Sunny conditions.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>Weather Tracker IoT – Jiyun Yang</p>
-  </div>
-</footer>
+  <!-- DEMO -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Demo</h2>
+
+            <div class="grid-2">
+              <div class="soft-card">
+                <h3 class="title is-5" style="margin-bottom:.5rem;">My Demo</h3>
+                <ol class="mini-list">
+                  <li>Open Wokwi projects:
+                    <ul>
+                      <li><a href="https://wokwi.com/projects/447578913862710273" target="_blank" rel="noopener noreferrer"><b>OLED demo</b></a></li>
+                      <li><a href="https://wokwi.com/projects/448217235414653953" target="_blank" rel="noopener noreferrer"><b>LEDs demo</b></a></li>
+                    </ul>
+                  </li>
+                </ol>
+                <div class="chiprow">
+                  <span class="chip ok">Live demo</span>
+                  <span class="chip alt">Evidence (Serial)</span>
+                  <span class="chip">OLED output</span>
+                  <span class="chip">LED behavior</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+                Academic Project Page Template
+              </a>
+              adopted from <a href="https://nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a>.
+              <br>
+              Licensed under
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">
+                Creative Commons Attribution-ShareAlike 4.0 International License
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copy helper -->
+  <script>
+    function copyCode(id){
+      const el = document.getElementById(id);
+      const text = el.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied!");
+      }).catch(() => {
+        alert("Copy failed (browser permission).");
+      });
+    }
+  </script>
 
 </body>
 </html>
