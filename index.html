@@ -396,13 +396,13 @@
                 <h3 class="title is-5" style="margin-bottom:.5rem;">A) OLED Weather Output</h3>
                 <ul class="mini-list">
                   <li><b>Goal</b>: Display the latest weather values on an ESP32 OLED.</li>
-                  <li><b>UI layout</b>: 4 lines to fit the screen cleanly.</li>
+                  <li><b>UI layout</b>: Temperature, Humid, Rain, Wind</li>
                   <li><b>Wind format</b>: <code>VECdeg / WSDm/s</code> (human-readable and compact).</li>
                   <li><b>Reliability</b>: Use NTP time sync and fetch from the latest valid base time.</li>
                 </ul>
                 <div class="chiprow">
-                  <span class="chip ok">SSD1306</span>
-                  <span class="chip alt">NTP Sync</span>
+                  <span class="chip ok">ESP32 OLED</span>
+                  <span class="chip alt">Weather info</span>
                   <span class="chip">Readable UI</span>
                 </div>
               </div>
@@ -415,15 +415,15 @@
                 </p>
 
                 <ul class="mini-list">
-                  <li><b>Rainy (Blue)</b>: <code>RN1 &gt; 0</code> (precipitation detected)</li>
-                  <li><b>Windy (Yellow)</b>: <code>WSD &gt;= 8.0</code> (noticeably strong wind for daily life)</li>
-                  <li><b>Sunny (Red)</b>: <code>RN1 == 0 AND REH &lt;= 50</code> (dry &amp; clear condition)</li>
+                  <li><b>Rainy (Blue)</b>: <code>RN1 &gt; 0</code> (raining)</li>
+                  <li><b>Windy (Yellow)</b>: <code>WSD &gt;= 3.5</code> (noticeably windy for daily life)</li>
+                  <li><b>Sunny (Red)</b>: <code>RN1 == 0 AND REH &lt;= 50</code> (dry &amp; bright condition)</li>
                 </ul>
 
                 <div class="chiprow">
                   <span class="chip ok">Explainable rules</span>
                   <span class="chip">Weather-based thresholds</span>
-                  <span class="chip alt">Easy to demonstrate</span>
+                  <span class="chip alt">Compared to typical weather in Korea</span>
                 </div>
               </div>
 
