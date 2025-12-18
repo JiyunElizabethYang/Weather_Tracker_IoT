@@ -358,7 +358,7 @@
                 <li><b>OLED Weather Output</b>: Display real-time weather values on the SSD1306 OLED.</li>
                 <li><b>LED Sensor Code</b>: Implement rule-based LED indicators (Sunny/Windy/Rainy).</li>
                 <li><b>Presentation & Materials</b>: Create and prepare
-                  <b>Midterm PPT</b>, <b>Shared Team Webpage</b>, <b>Shared Team GitHub</b>, and <b>Final PPT</b>.
+                  <b>Midterm Slides</b>, <b>Team Webpage</b>, <b>Team GitHub</b>, and <b>Final Slides</b>.
                 </li>
               </ul>
 
@@ -420,13 +420,13 @@
 
               <div class="soft-card">
                 <p style="margin-bottom:.5rem;">
-                  <b><span class="grad-emph">My part (high scoring summary)</span></b>
+                  <b><span class="grad-emph">My part</span></b>
                 </p>
                 <ul class="mini-list">
                   <li>Designed a clear <b>4-line OLED UI</b> (Temp / Humid / Rain / Wind).</li>
                   <li>Implemented <b>deterministic LED rules</b> with strict priority to avoid conflicting states.</li>
                   <li>Provided <b>defendable evidence</b> using Serial logs (URL + parsed values).</li>
-                  <li>Prepared and organized <b>project deliverables</b> (PPTs + shared web/GitHub materials).</li>
+                  <li>Prepared and organized <b>project deliverables</b> (Slides + web/GitHub materials).</li>
                 </ul>
                 <div class="chiprow">
                   <span class="chip ok">Defendable</span>
@@ -497,15 +497,6 @@
 
             <br>
 
-            <div class="soft-card">
-              <h3 class="title is-5" style="margin-bottom:.5rem;">C) What I can defend in Q&A</h3>
-              <ul class="mini-list">
-                <li><b>Correctness</b>: Serial log shows request URL and parsed values used for OLED/LED decisions.</li>
-                <li><b>Stability</b>: NTP sync + base time alignment avoids requesting missing datasets.</li>
-                <li><b>Clarity</b>: OLED output is compact and consistent with units.</li>
-              </ul>
-            </div>
-
           </div>
         </div>
       </div>
@@ -572,7 +563,7 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Core Code (Cleaned for Evaluation)</h2>
+            <h2 class="title is-3 section-title">Wokwi Codes</h2>
 
             <div class="soft-card" style="margin-bottom:1rem;">
               <p style="margin-bottom:.5rem;">
@@ -795,12 +786,12 @@ void parseAndDisplay(const String& json) {
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Demo Plan (What I Will Show) + Defense (FAQ)</h2>
+            <h2 class="title is-3 section-title">Demo</h2>
 
             <div class="grid-2">
 
               <div class="soft-card">
-                <h3 class="title is-5" style="margin-bottom:.5rem;">My Demo Flow (Exam-style)</h3>
+                <h3 class="title is-5" style="margin-bottom:.5rem;">My Demo</h3>
                 <ol class="mini-list">
                   <li>Open Wokwi projects:
                     <ul>
@@ -808,10 +799,6 @@ void parseAndDisplay(const String& json) {
                       <li><a href="https://wokwi.com/projects/448217235414653953" target="_blank" rel="noopener noreferrer"><b>LEDs demo</b></a></li>
                     </ul>
                   </li>
-                  <li>Run simulation and show Serial proof (URL + parsed values).</li>
-                  <li>Show OLED output updates (Temp/Humid/Rain/Wind).</li>
-                  <li>Explain LED rules and show LED behavior (Blue / Yellow / Red).</li>
-                  <li>Conclude with how my output integrates into the full team system.</li>
                 </ol>
                 <div class="chiprow">
                   <span class="chip ok">Live demo</span>
@@ -819,41 +806,6 @@ void parseAndDisplay(const String& json) {
                   <span class="chip">OLED output</span>
                   <span class="chip">LED behavior</span>
                 </div>
-              </div>
-
-              <div class="soft-card faq">
-                <h3 class="title is-5" style="margin-bottom:.5rem;">Defense / FAQ</h3>
-
-                <details open>
-                  <summary>Why use NTP and base-time alignment (minutes &lt; 15)?</summary>
-                  <div style="margin-top:.45rem;">
-                    Ultra-short observations are updated at specific times. If the current minute is under 15,
-                    the newest valid dataset may still be from the previous hour. I align base_time to avoid requesting missing data.
-                  </div>
-                </details>
-
-                <details>
-                  <summary>How do you prove your LED decisions are correct?</summary>
-                  <div style="margin-top:.45rem;">
-                    I log the parsed values (RN1, VEC, REH) and the chosen LED state to Serial.
-                    This makes the rule evaluation transparent and defendable.
-                  </div>
-                </details>
-
-                <details>
-                  <summary>Why prioritize Rainy over Windy/Sunny?</summary>
-                  <div style="margin-top:.45rem;">
-                    Rain is the most critical condition for immediate user action.
-                    Priority also ensures exactly one LED is active and prevents conflicting states.
-                  </div>
-                </details>
-
-                <details>
-                  <summary>What is your Windy threshold?</summary>
-                  <div style="margin-top:.45rem;">
-                    I used <b>VEC ≥ 3.5</b> as the Windy condition in this implementation, as decided for the final evaluation.
-                  </div>
-                </details>
               </div>
 
             </div>
