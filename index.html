@@ -409,8 +409,11 @@
               <div class="soft-card">
                 <h3 class="title is-5" style="margin-bottom:.5rem;">B) LED Indicator Rules</h3>
                 <p style="margin-bottom:.5rem;">
-                  The LED thresholds were chosen after reviewing common meteorological guidance (e.g., how wind strength is described on the Beaufort scale,
-                  and how “strong wind” criteria are defined in official weather warnings). For this project demo, I selected simple, explainable cutoffs that map well to everyday conditions.
+                  The LED thresholds were established by reviewing standard meteorological references, 
+                  such as the Beaufort wind force scale and official weather guidelines, 
+                  and by considering how these criteria are commonly interpreted in Korea. 
+                  The final cutoffs were selected to reflect weather conditions that people in Korea typically experience in daily life, 
+                  ensuring that the rules are both explainable and practical.
                 </p>
 
                 <ul class="mini-list">
@@ -432,14 +435,14 @@
 
             <!-- ✅ Added 공간: LED 기준을 자료 기반으로 세웠다는 설명 -->
             <div class="soft-card">
-              <h3 class="title is-5" style="margin-bottom:.5rem;">How I Chose the LED Thresholds (Reference-Based)</h3>
+              <h3 class="title is-5" style="margin-bottom:.5rem;">How I Chose the LED Thresholds</h3>
 
               <ul class="mini-list">
                 <li>
                   <b>Windy (Yellow)</b>: Based on the <b>Beaufort wind force scale</b>, a wind speed around
                   <b>3.4–5.4 m/s</b> corresponds to a <i>gentle breeze</i>, where leaves and small twigs are continuously moving.
                   Since winds above <b>3.5 m/s</b> are typically noticeable to people in daily life, I set the LED rule to turn
-                  <b>Yellow ON when wind speed (WSD) ≥ 3.5 m/s</b>.
+                  <b>Yellow LED ON</b> when <b>wind speed <code>WSD ≤ 3.5</code> m/s</b>.
                 </li>
 
                 <li>
@@ -453,7 +456,7 @@
               <p class="is-size-7" style="opacity:.9; margin-top:.6rem;">
                 References: 
                 <a href="https://en.wikipedia.org/wiki/Beaufort_scale" target="_blank" rel="noopener noreferrer">Beaufort scale</a> ·
-                <<a href="https://m.blog.naver.com/mrikor/223094161342?referrerCode=1" target="_blank" rel="noopener noreferrer">KMA standard (Summary)</a>
+                <a href="https://m.blog.naver.com/mrikor/223094161342?referrerCode=1" target="_blank" rel="noopener noreferrer">KMA standard (Summary)</a>
               </p>
             </div>
 
