@@ -89,7 +89,7 @@
 
     /* ✅ Team Page button (same shape, slightly different color emphasis) */
     .publication-links .button.team-btn{
-      background: linear-gradient(45deg, #2dd4bf, #3b82f6, #8b5cf6);
+      background: linear-gradient(45deg, #53f8e2, #3b82f6, #8b5cf6);
       background-size: 300% 300%;
       box-shadow: 0 10px 22px rgba(0,0,0,0.18);
       border: 1px solid rgba(255,255,255,0.18);
@@ -339,7 +339,7 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Welcome to "Jiyun Yang's Project Page"</h2>
+            <h2 class="title is-3 section-title">Welcome to "Jiyun's Project Page"</h2>
 
             <div class="soft-card">
               <p style="margin-bottom:.6rem;">
@@ -351,7 +351,7 @@
               <ul class="mini-list">
                 <li><b>OLED Weather Output</b>: Display real-time weather values on the SSD1306 OLED.</li>
                 <li><b>LED Sensor Code</b>: Implement rule-based LED indicators (Sunny/Windy/Rainy).</li>
-                <li><b>Presentation & Materials</b>: Create and prepare
+                <li><b>Presentation Materials</b>: Create and prepare
                   <b>Midterm Slides</b>, <b>Team Webpage</b>, <b>Team GitHub</b>, and <b>Final Slides</b>.
                 </li>
               </ul>
@@ -369,71 +369,12 @@
 
             <div class="media-frame">
               <video id="demo" autoplay controls muted loop>
-                <source src="static/videos/project.mp4" type="video/mp4">
+                <source src="static\videos\LED demo.mp4" type="video/mp4">
               </video>
             </div>
             <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
               Demo video: OLED shows (Temp/Humid/Rain/Wind) and LEDs indicate Sunny/Windy/Rainy based on weather conditions.
             </p>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OVERVIEW -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <div class="content">
-            <h2 class="title is-3 section-title">Project Overview</h2>
-
-            <div class="grid-2">
-              <div class="soft-card">
-                <p style="margin-bottom:.5rem;">
-                  <b><span class="grad-emph">What the project does</span></b>
-                </p>
-                <ul class="mini-list">
-                  <li>Fetches real-time weather observations from the <b>Korea Meteorological Administration (KMA) API Hub</b>.</li>
-                  <li>Parses JSON categories:
-                    <b>T1H</b> (Temperature), <b>REH</b> (Humidity), <b>RN1</b> (Rainfall),
-                    <b>VEC</b> (Wind direction), <b>WSD</b> (Wind speed).
-                  </li>
-                  <li>Visualizes data using an <b>OLED</b> display and <b>LED indicators</b> in a simulated ESP32 environment.</li>
-                </ul>
-                <div class="chiprow">
-                  <span class="chip alt">KMA API</span>
-                  <span class="chip">JSON</span>
-                  <span class="chip ok">OLED</span>
-                  <span class="chip ok">LEDs</span>
-                </div>
-              </div>
-
-              <div class="soft-card">
-                <p style="margin-bottom:.5rem;">
-                  <b><span class="grad-emph">My part</span></b>
-                </p>
-                <ul class="mini-list">
-                  <li>Designed a clear <b>4-line OLED UI</b> (Temp / Humid / Rain / Wind).</li>
-                  <li>Implemented <b>deterministic LED rules</b> using weather-related references to set thresholds.</li>
-                  <li>Provided <b>defendable evidence</b> using Serial logs (URL + parsed values).</li>
-                  <li>Prepared and organized <b>project deliverables</b> (Slides + web/GitHub materials).</li>
-                </ul>
-                <div class="chiprow">
-                  <span class="chip ok">Defendable</span>
-                  <span class="chip">Clear thresholds</span>
-                  <span class="chip alt">Documentation</span>
-                </div>
-              </div>
-            </div>
-
-            <br>
-
-            <div class="media-frame">
-              <img src="static/images/overview photo.png" alt="Project overview image">
-            </div>
 
           </div>
         </div>
@@ -454,7 +395,7 @@
               <div class="soft-card">
                 <h3 class="title is-5" style="margin-bottom:.5rem;">A) OLED Weather Output</h3>
                 <ul class="mini-list">
-                  <li><b>Goal</b>: Display the latest weather values on an SSD1306 OLED (128×64).</li>
+                  <li><b>Goal</b>: Display the latest weather values on an ESP32 OLED.</li>
                   <li><b>UI layout</b>: 4 lines to fit the screen cleanly.</li>
                   <li><b>Wind format</b>: <code>VECdeg / WSDm/s</code> (human-readable and compact).</li>
                   <li><b>Reliability</b>: Use NTP time sync and fetch from the latest valid base time.</li>
@@ -745,7 +686,7 @@ void fetchAndParseWeather() {
               <!-- ✅ 이미지 첨부 공간 (OLED) -->
               <div class="media-frame" style="margin-top: .8rem;">
                 <!-- 원하는 파일명으로 바꿔도 돼 -->
-                <img src="static/images/oled_result.png" alt="OLED implementation result image">
+                <img src="static\images\oled output.png" alt="OLED implementation result image">
               </div>
               <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
                 (Add your OLED screenshot here) Example: OLED screen showing Temp/Humid/Rain/Wind.
@@ -781,8 +722,8 @@ void updateLEDs() {
     return;
   }
 
-  // Windy (Yellow): noticeably windy condition (demo threshold)
-  if (WSD &gt;= 8.0) {
+  // Windy (Yellow): windy condition
+  if (WSD &gt;= 3.5) {
     digitalWrite(LED_YELLOW, HIGH);
     digitalWrite(LED_BLUE, LOW);
     digitalWrite(LED_RED, LOW);
@@ -790,7 +731,7 @@ void updateLEDs() {
     return;
   }
 
-  // Sunny (Red): dry &amp; clear condition
+  // Sunny (Red): dry &amp; bright condition
   if (RN1 == 0 &amp;&amp; REH &lt;= 50) {
     digitalWrite(LED_RED, HIGH);
     digitalWrite(LED_BLUE, LOW);
@@ -808,7 +749,7 @@ void updateLEDs() {
 
               <!-- ✅ 이미지 첨부 공간 (LEDs) -->
               <div class="media-frame" style="margin-top: .8rem;">
-                <img src="static/images/led_result.png" alt="LED implementation result image">
+                <img src="static\images\leds.png" alt="LED implementation result image">
               </div>
               <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
                 (Add your LED screenshot here) Example: LEDs turning ON based on Rain/Wind/Sunny conditions.
